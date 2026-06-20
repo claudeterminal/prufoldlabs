@@ -43,7 +43,9 @@
   /* per-section animated pixel backgrounds (scroll WITH the section) */
   .fxsec{position:relative;background:#05070a}
   .fxsec > *{position:relative;z-index:1}
-  .fxsec > canvas.secbg{position:absolute;top:0;left:50%;transform:translateX(-50%);width:100vw;height:100%;z-index:0;pointer-events:none}
+  .fxsec > canvas.secbg{position:absolute;top:0;left:50%;transform:translateX(-50%);width:100vw;height:100%;z-index:0;pointer-events:none;opacity:.55}
+  /* darken behind the text so the pixels read as a backdrop, not over the type */
+  .fxsec::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(135% 82% at 50% 50%,rgba(5,7,10,.94) 0,rgba(5,7,10,.94) 34%,rgba(5,7,10,.45) 62%,rgba(5,7,10,0) 86%)}
 
   section{padding:100px 24px;max-width:1180px;margin:0 auto}
   .fxsec > section{max-width:1180px;margin:0 auto}
