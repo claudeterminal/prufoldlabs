@@ -19,7 +19,7 @@
   h1,h2,h3{font-family:'Geist',sans-serif;letter-spacing:-.03em;font-weight:600}
 
   nav{position:fixed;top:0;left:0;right:0;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:9px 40px;
-    background:linear-gradient(180deg,rgba(5,7,10,.55),rgba(5,7,10,.08));backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.05)}
+    background:rgba(10,14,18,.32);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
   .brand{font-weight:700;font-size:20px;letter-spacing:-.01em;display:flex;gap:11px;align-items:center}
   .brandicon{height:24px;width:auto;display:block}
   .brand .wm b{font-weight:700;color:#fff}
@@ -32,7 +32,7 @@
 
   header{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:120px 24px 80px;position:relative;overflow:hidden;background:#05070a}
   .herovid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
-  .herovid-veil{position:absolute;inset:0;z-index:1;background:linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.5)),linear-gradient(180deg,transparent 62%,#05070a)}
+  .herovid-veil{position:absolute;inset:0;z-index:1;background:linear-gradient(rgba(0,0,0,.75),rgba(0,0,0,.75)),linear-gradient(180deg,transparent 62%,#05070a)}
   header h1,header .sub,header .cta{position:relative;z-index:2}
   h1{font-size:clamp(28px,4.2vw,56px);font-weight:600;line-height:1.07;max-width:18ch;color:#f3f5fb;min-height:1.15em}
   .caret{color:var(--accent);font-weight:400;animation:blink 1s steps(1) infinite}
@@ -80,6 +80,7 @@
   .pcard .ic{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;font-size:24px;margin-bottom:22px;background:rgba(121,201,74,.12);border:1px solid rgba(121,201,74,.25)}
   .pcard h3{font-size:30px;margin-bottom:14px;color:#fff;letter-spacing:-.02em}
   .pcard p{color:var(--muted);font-size:15.5px;line-height:1.6;max-width:34ch}
+  .pillfx{width:100%;height:150px;display:block;border:1px solid var(--line);border-radius:14px;background:#0a0d08;margin-bottom:24px}
 
   .forces{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:54px}
   .force .ic{width:54px;height:54px;border-radius:50%;background:rgba(121,201,74,.14);display:grid;place-items:center;margin-bottom:22px;margin-left:auto;margin-right:auto}
@@ -150,7 +151,7 @@
 </div>
 
 <!-- 3) STATEMENT -->
-<div class="fxsec"><canvas class="secbg" data-fx="grid"></canvas>
+<div class="fxsec"><canvas class="secbg" data-fx="nodes"></canvas>
 <section id="about" class="statement reveal">
   <p>We make it possible to build agentic apps, LLM pipelines, and robotics workflows with verifiable trust without requiring deep cryptography expertise.</p>
 </section></div>
@@ -169,14 +170,14 @@
 <div class="fxsec"><canvas class="secbg" data-fx="rain"></canvas>
 <section class="reveal">
   <div class="pillars">
-    <div class="pcard"><div class="ic">🛡️</div><h3>AI Safety</h3><p>Build verifiable AI systems with cryptographic guarantees for safe and reliable artificial intelligence.</p></div>
-    <div class="pcard"><div class="ic">🔒</div><h3>Privacy-Preserving</h3><p>Create applications that protect user privacy while maintaining functionality and performance.</p></div>
-    <div class="pcard"><div class="ic">🧪</div><h3>Reproducible Science</h3><p>Enable verifiable research and reproducible scientific computation with cryptographic proofs.</p></div>
+    <div class="pcard"><canvas class="pillfx" data-pfx="safety"></canvas><h3>AI Safety</h3><p>Build verifiable AI systems with cryptographic guarantees for safe and reliable artificial intelligence.</p></div>
+    <div class="pcard"><canvas class="pillfx" data-pfx="privacy"></canvas><h3>Privacy-Preserving</h3><p>Create applications that protect user privacy while maintaining functionality and performance.</p></div>
+    <div class="pcard"><canvas class="pillfx" data-pfx="repro"></canvas><h3>Reproducible Science</h3><p>Enable verifiable research and reproducible scientific computation with cryptographic proofs.</p></div>
   </div>
 </section></div>
 
 <!-- 6) WHY NOW -->
-<div class="fxsec"><canvas class="secbg" data-fx="stream"></canvas>
+<div class="fxsec"><canvas class="secbg" data-fx="nodes"></canvas>
 <section id="why" class="center reveal">
   <div class="eyebrow" style="justify-content:center">WHY NOW</div>
   <p class="lead center">Three powerful forces are converging to make verifiable AI trust essential</p>
@@ -228,14 +229,22 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 (function(){
   const cvs=[...document.querySelectorAll('canvas.secbg')];const vis=new Set();
   const vo=new IntersectionObserver(es=>es.forEach(e=>{e.isIntersecting?vis.add(e.target):vis.delete(e.target)}),{rootMargin:'120px'});
-  function sz(cv){const h=cv.parentElement.offsetHeight,d=Math.min(devicePixelRatio||1,1.5);cv.width=Math.max(2,Math.floor(innerWidth*d));cv.height=Math.max(2,Math.floor(h*d));cv.style.width=innerWidth+'px';cv.style.height=h+'px';cv._d=d;}
+  function sz(cv){const h=cv.parentElement.offsetHeight,d=Math.min(devicePixelRatio||1,1.5);cv.width=Math.max(2,Math.floor(innerWidth*d));cv.height=Math.max(2,Math.floor(h*d));cv.style.width=innerWidth+'px';cv.style.height=h+'px';cv._d=d;
+    if(cv.dataset.fx==='nodes'){const n=Math.max(16,Math.round(innerWidth/24));cv._pts=[];for(let k=0;k<n;k++)cv._pts.push({x:Math.random()*cv.width,y:Math.random()*cv.height,vx:(Math.random()-.5)*0.3*d,vy:(Math.random()-.5)*0.3*d});}}
   cvs.forEach(cv=>{vo.observe(cv);cv._seed=Math.random()*900;sz(cv);});
   addEventListener('resize',()=>cvs.forEach(sz));
   function H(x,y){const s=Math.sin(x*127.1+y*311.7)*43758.5453;return s-Math.floor(s);}
   function draw(cv,t){
-    const ctx=cv.getContext('2d'),w=cv.width,h=cv.height,cell=Math.max(11,Math.floor(15*cv._d));
-    const cols=Math.ceil(w/cell),rows=Math.ceil(h/cell),fx=cv.dataset.fx,sd=cv._seed;
+    const ctx=cv.getContext('2d'),w=cv.width,h=cv.height,fx=cv.dataset.fx,sd=cv._seed;
     ctx.clearRect(0,0,w,h);
+    if(fx==='nodes'){var pts=cv._pts||[];var md=140*cv._d;
+      for(var p=0;p<pts.length;p++){var P=pts[p];P.x+=P.vx;P.y+=P.vy;if(P.x<0||P.x>w)P.vx*=-1;if(P.y<0||P.y>h)P.vy*=-1;}
+      for(var a=0;a<pts.length;a++)for(var b=a+1;b<pts.length;b++){var dx=pts[a].x-pts[b].x,dy=pts[a].y-pts[b].y,dd=Math.sqrt(dx*dx+dy*dy);
+        if(dd<md){ctx.strokeStyle='rgba(121,201,74,'+(0.18*(1-dd/md))+')';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(pts[a].x,pts[a].y);ctx.lineTo(pts[b].x,pts[b].y);ctx.stroke();}}
+      ctx.fillStyle='rgba(121,201,74,.7)';for(var q=0;q<pts.length;q++){ctx.beginPath();ctx.arc(pts[q].x,pts[q].y,1.7*cv._d,0,6.283);ctx.fill();}
+      return;}
+    var cell=Math.max(11,Math.floor(15*cv._d));
+    const cols=Math.ceil(w/cell),rows=Math.ceil(h/cell);
     if(fx==='grid'){ctx.strokeStyle='rgba(79,156,46,.05)';ctx.lineWidth=1;for(let x=0;x<=cols;x++){ctx.beginPath();ctx.moveTo(x*cell,0);ctx.lineTo(x*cell,h);ctx.stroke();}for(let y=0;y<=rows;y++){ctx.beginPath();ctx.moveTo(0,y*cell);ctx.lineTo(w,y*cell);ctx.stroke();}}
     for(let x=0;x<cols;x++)for(let y=0;y<rows;y++){
       let v=0;
@@ -252,6 +261,31 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   }
   function frame(ts){const t=ts/1000;for(const cv of cvs)if(vis.has(cv))draw(cv,t);requestAnimationFrame(frame);}
   requestAnimationFrame(frame);
+})();
+/* pillar illustrations — each animates to explain the concept */
+(function(){
+  const cs=[...document.querySelectorAll('canvas.pillfx')];if(!cs.length)return;const vis=new Set();
+  const o=new IntersectionObserver(e=>e.forEach(x=>{x.isIntersecting?vis.add(x.target):vis.delete(x.target)}),{rootMargin:'140px'});
+  function sz(c){const d=Math.min(devicePixelRatio||1,2);c.width=Math.max(2,c.offsetWidth*d);c.height=Math.max(2,c.offsetHeight*d);c._d=d;}
+  cs.forEach(c=>{o.observe(c);sz(c);});addEventListener('resize',()=>cs.forEach(sz));
+  function rr(x,a,b,wd,ht,r){x.beginPath();x.moveTo(a+r,b);x.arcTo(a+wd,b,a+wd,b+ht,r);x.arcTo(a+wd,b+ht,a,b+ht,r);x.arcTo(a,b+ht,a,b,r);x.arcTo(a,b,a+wd,b,r);x.closePath();}
+  const LIME='rgba(121,201,74,';
+  function draw(c,t){
+    const x=c.getContext('2d'),w=c.width,h=c.height,d=c._d,fx=c.dataset.pfx;x.clearRect(0,0,w,h);
+    if(fx==='safety'){const cols=8,rows=4,pad=16*d,gw=(w-pad*2)/cols,gh=(h-pad*2)/rows,sweep=(t*0.45)%1.35;
+      for(let i=0;i<cols;i++)for(let j=0;j<rows;j++){const cx=pad+i*gw,cy=pad+j*gh,on=((i+j*0.6)/(cols+rows*0.6))<sweep;
+        x.fillStyle=on?LIME+'0.85)':'rgba(255,255,255,0.05)';rr(x,cx+2*d,cy+2*d,gw-4*d,gh-4*d,4*d);x.fill();
+        if(on){x.strokeStyle='rgba(8,12,6,0.85)';x.lineWidth=1.6*d;x.beginPath();x.moveTo(cx+gw*0.34,cy+gh*0.52);x.lineTo(cx+gw*0.45,cy+gh*0.66);x.lineTo(cx+gw*0.68,cy+gh*0.36);x.stroke();}}}
+    else if(fx==='privacy'){const rows=5,pad=16*d,rh=(h-pad*2)/rows,n=11,bw=(w-pad*2)/n,wave=(t*0.5)%1.4;
+      for(let j=0;j<rows;j++){const cy=pad+j*rh;for(let i=0;i<n;i++){const cx=pad+i*bw,enc=(i/n)<wave;
+        if(enc){x.fillStyle='rgba(130,150,100,0.45)';x.beginPath();x.arc(cx+bw*0.5,cy+rh*0.45,Math.min(bw,rh)*0.15,0,6.283);x.fill();}
+        else{x.fillStyle=LIME+'0.8)';rr(x,cx+2*d,cy+rh*0.18,bw-4*d,rh*0.5,3*d);x.fill();}}}}
+    else{const pad=16*d,gap=22*d,colw=(w-pad*2-gap)/2,rows=5,rh=(h-pad*2)/rows,prog=(t*0.45)%1.5;
+      for(let k=0;k<2;k++){const ox=pad+k*(colw+gap);for(let j=0;j<rows;j++){const cy=pad+j*rh,on=(j/rows)<prog;
+        x.fillStyle=on?LIME+'0.82)':'rgba(255,255,255,0.05)';rr(x,ox,cy+2*d,colw,rh-5*d,4*d);x.fill();}}
+      x.fillStyle=LIME+'0.85)';const mx=w/2,my=h/2;x.fillRect(mx-6*d,my-5*d,12*d,2.6*d);x.fillRect(mx-6*d,my+2.4*d,12*d,2.6*d);}
+  }
+  function loop(ts){const t=ts/1000;for(const c of cs)if(vis.has(c))draw(c,t);requestAnimationFrame(loop);}requestAnimationFrame(loop);
 })();
 </script>
 </body>
