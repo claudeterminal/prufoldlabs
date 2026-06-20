@@ -46,9 +46,9 @@
   .fxsec{position:relative;background:#05070a}
   .fxsec > *{position:relative;z-index:1}
   /* pixels fade out toward the centre so they blend AROUND the text (no hard dark chunk) */
-  .fxsec > canvas.secbg{position:absolute;top:0;left:50%;transform:translateX(-50%);width:100vw;height:100%;z-index:0;pointer-events:none;opacity:.7;
-    -webkit-mask-image:radial-gradient(130% 105% at 50% 50%,transparent 0 30%,rgba(0,0,0,.45) 52%,#000 82%);
-    mask-image:radial-gradient(130% 105% at 50% 50%,transparent 0 30%,rgba(0,0,0,.45) 52%,#000 82%)}
+  .fxsec > canvas.secbg{position:absolute;top:0;left:50%;transform:translateX(-50%);width:100vw;height:100%;z-index:0;pointer-events:none;opacity:.8;
+    -webkit-mask-image:radial-gradient(125% 115% at 50% 50%,transparent 11%,#000 58%);
+    mask-image:radial-gradient(125% 115% at 50% 50%,transparent 11%,#000 58%)}
 
   section{padding:100px 24px;max-width:1180px;margin:0 auto}
   .fxsec > section{max-width:1180px;margin:0 auto}
@@ -95,7 +95,7 @@
   .gradgreen{background:linear-gradient(105deg,#3e7d20,#c6e170);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
   .pillfx{width:100%;height:150px;display:block;border:1px solid #1c2415;border-radius:12px;background:#0a0d08;margin-bottom:24px}
   .forcefx{width:62px;height:62px;display:block;margin:0 auto 22px}
-  .gradgw{background:linear-gradient(105deg,#3e7d20,#c6e170);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+  .gradgw{background:linear-gradient(105deg,#86c84e,#e2f4ba);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
 
   .forces{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:54px}
   .force .ic{width:54px;height:54px;border-radius:50%;background:rgba(121,201,74,.14);display:grid;place-items:center;margin-bottom:22px;margin-left:auto;margin-right:auto}
@@ -158,7 +158,7 @@
 <!-- STATEMENT (after video, above pillars) -->
 <div class="fxsec"><canvas class="secbg" data-fx="nodes"></canvas>
 <section id="about" class="statement reveal">
-  <p class="gradgw">We make it possible to build agentic apps, LLM pipelines, and robotics workflows with verifiable trust without requiring deep cryptography expertise.</p>
+  <p style="color:#fff;-webkit-text-fill-color:#fff">“We make it possible to build agentic apps, LLM pipelines, and robotics workflows with verifiable trust without requiring deep cryptography expertise.”</p>
 </section></div>
 
 <!-- PILLARS (moved above blogs) -->
