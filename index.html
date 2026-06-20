@@ -39,7 +39,7 @@
   h1{font-size:clamp(28px,4.2vw,56px);font-weight:600;line-height:1.07;max-width:18ch;color:#f3f5fb;min-height:1.15em}
   .caret{color:var(--accent);font-weight:400;animation:blink 1s steps(1) infinite}
   @keyframes blink{50%{opacity:0}}
-  .sub{margin-top:22px;font-size:clamp(16px,1.7vw,19px);color:#fff;max-width:46ch;line-height:1.5;text-shadow:0 1px 14px rgba(0,0,0,.6)}
+  .sub{margin-top:22px;font-size:clamp(16px,1.7vw,19px);color:#fff;max-width:46ch;line-height:1.5}
   .cta{margin-top:40px}.btn.lg{padding:14px 30px;font-size:16px}
 
   /* per-section animated pixel backgrounds (scroll WITH the section) */
@@ -93,6 +93,9 @@
   .tbody .p{color:#c6e170}.tbody .ok{color:#79c94a;font-weight:600}.tbody .dim{color:#7c8a64}
   .tcursor{color:var(--accent)}
   .gradgreen{background:linear-gradient(100deg,#c6e170,#5fae35);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .pillfx{width:100%;height:150px;display:block;border:1px solid #1c2415;border-radius:12px;background:#0a0d08;margin-bottom:24px}
+  .forcefx{width:62px;height:62px;display:block;margin:0 auto 22px}
+  .gradgw{background:linear-gradient(105deg,#aee389,#ffffff);-webkit-background-clip:text;background-clip:text;color:transparent}
 
   .forces{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:54px}
   .force .ic{width:54px;height:54px;border-radius:50%;background:rgba(121,201,74,.14);display:grid;place-items:center;margin-bottom:22px;margin-left:auto;margin-right:auto}
@@ -102,8 +105,8 @@
 
   .storm{text-align:center}
   .storm .box{background:linear-gradient(120deg,#4f9c2e,#3a7a22);border-radius:22px;padding:60px 40px;max-width:760px;margin:0 auto;box-shadow:0 20px 60px rgba(79,156,46,.25)}
-  .storm .box h3{font-size:clamp(22px,3vw,32px);color:#0d1304;max-width:24ch;margin:0 auto;font-weight:700;letter-spacing:0}
-  .storm .box p{color:rgba(13,19,4,.85);margin-top:18px;font-size:17px;max-width:48ch;margin-left:auto;margin-right:auto}
+  .storm .box h3{font-size:clamp(22px,3vw,32px);color:#fff;max-width:24ch;margin:0 auto;font-weight:700;letter-spacing:0}
+  .storm .box p{color:rgba(255,255,255,.92);margin-top:18px;font-size:17px;max-width:48ch;margin-left:auto;margin-right:auto}
   .storm .closing{color:var(--muted);margin-top:40px;font-size:18px}
   .storm .why{color:var(--accent);font-weight:700;margin-top:18px;font-size:20px}
 
@@ -152,6 +155,16 @@
   <div class="cta"><a href="#" class="btn lg">Early Access</a></div>
 </header>
 
+<!-- PILLARS (moved above blogs) -->
+<div class="fxsec"><canvas class="secbg" data-fx="rain"></canvas>
+<section class="reveal">
+  <div class="pillars">
+    <div class="pcard"><div class="term"><div class="tbar"><span class="tdot r"></span><span class="tdot y"></span><span class="tdot g"></span><span class="tname">verify.sh</span></div><pre class="tbody" data-term="safety"></pre></div><h3 class="gradgreen">AI Safety</h3><p>Build verifiable AI systems with cryptographic guarantees for safe and reliable artificial intelligence.</p></div>
+    <div class="pcard"><canvas class="pillfx" data-pfx="privacy"></canvas><h3 class="gradgreen">Privacy-Preserving</h3><p>Create applications that protect user privacy while maintaining functionality and performance.</p></div>
+    <div class="pcard"><canvas class="pillfx" data-pfx="repro"></canvas><h3 class="gradgreen">Reproducible Science</h3><p>Enable verifiable research and reproducible scientific computation with cryptographic proofs.</p></div>
+  </div>
+</section></div>
+
 <!-- 2) LATEST UPDATES (black) -->
 <div class="updates-wrap">
 <section id="updates" class="reveal">
@@ -167,7 +180,7 @@
 <!-- 3) STATEMENT -->
 <div class="fxsec"><canvas class="secbg" data-fx="nodes"></canvas>
 <section id="about" class="statement reveal">
-  <p>We make it possible to build agentic apps, LLM pipelines, and robotics workflows with verifiable trust without requiring deep cryptography expertise.</p>
+  <p class="gradgw">We make it possible to build agentic apps, LLM pipelines, and robotics workflows with verifiable trust without requiring deep cryptography expertise.</p>
 </section></div>
 
 <!-- 4) PARTNERS -->
@@ -180,25 +193,15 @@
   <p class="tm">© 2026 NVIDIA, the NVIDIA logo, and NVIDIA Inception Program are trademarks and/or registered trademarks of NVIDIA Corporation in the U.S. and other countries.</p>
 </section></div>
 
-<!-- 5) PILLARS -->
-<div class="fxsec"><canvas class="secbg" data-fx="rain"></canvas>
-<section class="reveal">
-  <div class="pillars">
-    <div class="pcard"><div class="term"><div class="tbar"><span class="tdot r"></span><span class="tdot y"></span><span class="tdot g"></span><span class="tname">verify.sh</span></div><pre class="tbody" data-term="safety"></pre></div><h3 class="gradgreen">AI Safety</h3><p>Build verifiable AI systems with cryptographic guarantees for safe and reliable artificial intelligence.</p></div>
-    <div class="pcard"><div class="term"><div class="tbar"><span class="tdot r"></span><span class="tdot y"></span><span class="tdot g"></span><span class="tname">private.sh</span></div><pre class="tbody" data-term="privacy"></pre></div><h3 class="gradgreen">Privacy-Preserving</h3><p>Create applications that protect user privacy while maintaining functionality and performance.</p></div>
-    <div class="pcard"><div class="term"><div class="tbar"><span class="tdot r"></span><span class="tdot y"></span><span class="tdot g"></span><span class="tname">attest.json</span></div><pre class="tbody" data-term="repro"></pre></div><h3 class="gradgreen">Reproducible Science</h3><p>Enable verifiable research and reproducible scientific computation with cryptographic proofs.</p></div>
-  </div>
-</section></div>
-
 <!-- 6) WHY NOW -->
 <div class="fxsec"><canvas class="secbg" data-fx="nodes"></canvas>
 <section id="why" class="center reveal">
   <div class="eyebrow" style="justify-content:center">WHY NOW</div>
-  <p class="lead center">Three powerful forces are converging to make verifiable AI trust essential</p>
+  <p class="lead center gradgw">Three powerful forces are converging to make verifiable AI trust essential</p>
   <div class="forces">
-    <div class="force"><div class="ic"><span></span></div><h4>EXPONENTIAL AI CAPABILITY</h4><p>AI systems are rapidly approaching and surpassing human-level performance across domains, creating unprecedented capability and risk.</p></div>
-    <div class="force"><div class="ic"><span></span></div><h4>REGULATORY PRESSURE</h4><p>Governments worldwide are implementing AI governance frameworks, requiring verifiable safety and compliance measures.</p></div>
-    <div class="force"><div class="ic"><span></span></div><h4>ECONOMIC REALITY OF AI FAILURES</h4><p>High-profile AI failures are costing billions and eroding trust, making reliability a competitive necessity.</p></div>
+    <div class="force"><canvas class="forcefx" data-ffx="0"></canvas><h4>EXPONENTIAL AI CAPABILITY</h4><p>AI systems are rapidly approaching and surpassing human-level performance across domains, creating unprecedented capability and risk.</p></div>
+    <div class="force"><canvas class="forcefx" data-ffx="1"></canvas><h4>REGULATORY PRESSURE</h4><p>Governments worldwide are implementing AI governance frameworks, requiring verifiable safety and compliance measures.</p></div>
+    <div class="force"><canvas class="forcefx" data-ffx="2"></canvas><h4>ECONOMIC REALITY OF AI FAILURES</h4><p>High-profile AI failures are costing billions and eroding trust, making reliability a competitive necessity.</p></div>
   </div>
 </section></div>
 
@@ -254,8 +257,8 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
     if(fx==='nodes'){var pts=cv._pts||[];var md=140*cv._d;
       for(var p=0;p<pts.length;p++){var P=pts[p];P.x+=P.vx;P.y+=P.vy;if(P.x<0||P.x>w)P.vx*=-1;if(P.y<0||P.y>h)P.vy*=-1;}
       for(var a=0;a<pts.length;a++)for(var b=a+1;b<pts.length;b++){var dx=pts[a].x-pts[b].x,dy=pts[a].y-pts[b].y,dd=Math.sqrt(dx*dx+dy*dy);
-        if(dd<md){ctx.strokeStyle='rgba(121,201,74,'+(0.18*(1-dd/md))+')';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(pts[a].x,pts[a].y);ctx.lineTo(pts[b].x,pts[b].y);ctx.stroke();}}
-      ctx.fillStyle='rgba(121,201,74,.7)';for(var q=0;q<pts.length;q++){ctx.beginPath();ctx.arc(pts[q].x,pts[q].y,1.7*cv._d,0,6.283);ctx.fill();}
+        if(dd<md){ctx.strokeStyle='hsla('+(110+((a+b)*23)%200)+',72%,58%,'+(0.18*(1-dd/md))+')';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(pts[a].x,pts[a].y);ctx.lineTo(pts[b].x,pts[b].y);ctx.stroke();}}
+      for(var q=0;q<pts.length;q++){ctx.fillStyle='hsla('+(110+(q*29)%200)+',82%,63%,.85)';ctx.beginPath();ctx.arc(pts[q].x,pts[q].y,1.7*cv._d,0,6.283);ctx.fill();}
       return;}
     var cell=Math.max(11,Math.floor(15*cv._d));
     const cols=Math.ceil(w/cell),rows=Math.ceil(h/cell);
@@ -269,8 +272,8 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
       else if(fx==='binary'){const sp=.4+H(x+sd,9)*1.3;v=(H(x+sd,Math.floor(y-t*sp))>.82)?1:0;}
       if(v<=.03)continue;
       const px=x*cell,py=y*cell;
-      if(fx==='binary'){ctx.fillStyle='rgba(121,201,74,'+(.1+.55*v)+')';ctx.font=(cell*.82)+'px Geist Mono, monospace';ctx.fillText(H(x,Math.floor(y/2))>.5?'1':'0',px+cell*.18,py+cell*.82);}
-      else{ctx.fillStyle='rgba(121,201,74,'+(.06+.85*Math.min(1,v))+')';ctx.fillRect(px+cell*.2,py+cell*.2,cell*.6,cell*.6);}
+      if(fx==='binary'){ctx.fillStyle='hsla('+(100+H(x+sd,3)*200)+',82%,64%,'+(.1+.55*v)+')';ctx.font=(cell*.82)+'px Geist Mono, monospace';ctx.fillText(H(x,Math.floor(y/2))>.5?'1':'0',px+cell*.18,py+cell*.82);}
+      else{ctx.fillStyle='hsla('+(100+H(x*1.7+sd,y*0.9)*200)+',82%,60%,'+(.06+.85*Math.min(1,v))+')';ctx.fillRect(px+cell*.2,py+cell*.2,cell*.6,cell*.6);}
     }
   }
   function frame(ts){const t=ts/1000;for(const cv of cvs)if(vis.has(cv))draw(cv,t);requestAnimationFrame(frame);}
@@ -319,6 +322,24 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
     }
     render('');setTimeout(step,300+Math.random()*700);
   });
+})();
+/* animated force icons */
+(function(){
+  var cs=[].slice.call(document.querySelectorAll('canvas.forcefx'));if(!cs.length)return;
+  function sz(c){var d=Math.min(devicePixelRatio||1,2);c.width=c.offsetWidth*d;c.height=c.offsetHeight*d;c._d=d;}
+  cs.forEach(sz);addEventListener('resize',function(){cs.forEach(sz);});
+  function draw(c,t){var x=c.getContext('2d'),w=c.width,h=c.height,d=c._d,f=c.dataset.ffx,p=12*d;x.clearRect(0,0,w,h);x.lineCap='round';
+    if(f==='0'){var prog=(t*0.4)%1.35;x.strokeStyle='#79c94a';x.lineWidth=2.4*d;x.beginPath();var first=true;
+      for(var i=0;i<=40;i++){var u=i/40;if(u>prog)break;var px=p+u*(w-2*p),py=h-p-Math.pow(u,2.4)*(h-2*p);first?(x.moveTo(px,py),first=false):x.lineTo(px,py);}x.stroke();
+      var lu=Math.min(prog,1),lx=p+lu*(w-2*p),ly=h-p-Math.pow(lu,2.4)*(h-2*p);x.fillStyle='#aee389';x.beginPath();x.arc(lx,ly,3.2*d,0,6.283);x.fill();}
+    else if(f==='1'){var rows=3,bs=(h-2*p)/rows,on=Math.floor((t*1.05)%(rows+1));
+      for(var r=0;r<rows;r++){var by=p+r*bs;x.strokeStyle='#5fae35';x.lineWidth=1.6*d;x.strokeRect(p,by+bs*0.12,bs*0.66,bs*0.66);
+        if(r<on){x.strokeStyle='#aee389';x.lineWidth=2.2*d;x.beginPath();x.moveTo(p+bs*0.14,by+bs*0.46);x.lineTo(p+bs*0.3,by+bs*0.64);x.lineTo(p+bs*0.56,by+bs*0.24);x.stroke();}
+        x.fillStyle='rgba(121,201,74,'+(r<on?0.55:0.18)+')';x.fillRect(p+bs*0.92,by+bs*0.28,(w-2*p)-bs*0.92,bs*0.34);}}
+    else{x.strokeStyle='#e0563f';x.lineWidth=2.4*d;x.beginPath();var n=7;
+      for(var i2=0;i2<=n;i2++){var u2=i2/n,px2=p+u2*(w-2*p),s=Math.sin(i2*12.9+1.3)*43758.5;s=s-Math.floor(s);var py2=p+(u2*0.66+0.12+(s-0.5)*0.4)*(h-2*p)+Math.sin(t*2+i2)*2*d;i2===0?x.moveTo(px2,py2):x.lineTo(px2,py2);}x.stroke();
+      x.fillStyle='#e0563f';x.beginPath();x.arc(w-p,p+0.78*(h-2*p),3*d,0,6.283);x.fill();}}
+  function loop(ts){var t=ts/1000;for(var i=0;i<cs.length;i++)draw(cs[i],t);requestAnimationFrame(loop);}requestAnimationFrame(loop);
 })();
 </script>
 </body>
