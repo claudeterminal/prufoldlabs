@@ -24,14 +24,14 @@
   .content{position:relative;z-index:2}
 
   nav{position:fixed;top:0;left:0;right:0;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:9px 40px;backdrop-filter:blur(10px);background:rgba(5,7,10,.72);border-bottom:1px solid rgba(255,255,255,.06)}
-  .brand{font-weight:700;font-size:20px;letter-spacing:.01em;display:flex;gap:11px;align-items:center}
+  .brand{font-weight:700;font-size:20px;letter-spacing:-.01em;display:flex;gap:11px;align-items:center}
   .brandicon{height:24px;width:auto;display:block}
-  .brand b{font-weight:700;color:#fff}
-  .brand span{color:var(--accent);font-weight:700}
+  .brand .wm b{font-weight:700;color:#fff}
+  .brand .wm i{color:var(--accent);font-weight:700;font-style:normal}
   .navlinks{display:flex;gap:30px;align-items:center;font-size:14.5px;color:var(--muted)}
   .navlinks a{color:var(--muted);text-decoration:none;transition:color .2s}
   .navlinks a:hover{color:var(--ink)}
-  .btn{background:linear-gradient(120deg,#8aad2c,#738d25);color:#0c1004;border:none;padding:9px 20px;border-radius:999px;font-weight:600;font-size:14px;cursor:pointer;font-family:inherit;box-shadow:0 6px 26px rgba(115,141,37,.4);transition:transform .2s,box-shadow .2s;text-decoration:none;display:inline-block}
+  .btn{background:linear-gradient(120deg,#8aad2c,#738d25);color:#000;border:none;padding:9px 20px;border-radius:999px;font-weight:600;font-size:14px;cursor:pointer;font-family:inherit;box-shadow:0 6px 26px rgba(115,141,37,.4);transition:transform .2s,box-shadow .2s;text-decoration:none;display:inline-block}
   .btn:hover{transform:translateY(-2px);box-shadow:0 10px 34px rgba(166,196,58,.5)}
 
   header{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:120px 24px 80px;position:relative;overflow:hidden}
@@ -120,7 +120,7 @@
 
 <div class="content">
 <nav>
-  <div class="brand"><img class="brandicon" src="assets/prufold-icon-dark.png" alt=""><b>PRUFOLD</b> <span>LABS</span></div>
+  <div class="brand"><img class="brandicon" src="assets/prufold-icon-dark.png" alt=""><span class="wm"><b>PRUFOLD</b> <i>LABS</i></span></div>
   <div class="navlinks">
     <a href="#about">About</a>
     <a href="blog/index.html">Blog</a>
@@ -197,7 +197,7 @@
 
 <!-- FOOTER -->
 <footer>
-  <div class="brand"><img class="brandicon" src="assets/prufold-icon-dark.png" alt=""><b>PRUFOLD</b> <span>LABS</span></div>
+  <div class="brand"><img class="brandicon" src="assets/prufold-icon-dark.png" alt=""><span class="wm"><b>PRUFOLD</b> <i>LABS</i></span></div>
   <div class="ftag">The Trust Layer for the Autonomous Economy</div>
   <div class="social">
     <a href="#" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 11-.02 5 2.5 2.5 0 01.02-5zM3 9h4v12H3zM10 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.4c0-1.29-.02-2.95-1.8-2.95-1.8 0-2.08 1.4-2.08 2.85V21h-4z"/></svg></a>
