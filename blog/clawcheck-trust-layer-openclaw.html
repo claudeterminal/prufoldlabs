@@ -1,0 +1,138 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ClawCheck: The Trust Layer OpenClaw Needs — Prufold Labs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:#000;color:#ededed;font-family:'Geist',system-ui,sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased;letter-spacing:-.011em}
+.top{position:sticky;top:0;background:rgba(0,0,0,.7);backdrop-filter:blur(10px);border-bottom:1px solid #161616;padding:18px 28px;z-index:5}
+.top a{color:#bdbdbd;text-decoration:none;font-size:14px;font-weight:500;letter-spacing:.02em}
+.top a:hover{color:#fff}
+.wrap{max-width:720px;margin:0 auto;padding:70px 24px 120px}
+h1.title{font-size:clamp(30px,4.6vw,50px);font-weight:600;line-height:1.08;letter-spacing:-.03em;color:#fff;margin-bottom:18px}
+.byline{color:#7d7d7d;font-size:14px;margin-bottom:34px}
+.rule{height:1px;background:#1c1c1c;margin-bottom:40px}
+article{font-size:17px;color:#cfcfcf}
+article p{margin:0 0 22px}
+article h2{font-size:26px;font-weight:600;color:#fff;letter-spacing:-.02em;margin:46px 0 16px;line-height:1.2}
+article h3{font-size:20px;font-weight:600;color:#fff;letter-spacing:-.01em;margin:34px 0 12px}
+article strong{color:#fff;font-weight:600}
+article a{color:#fff;text-decoration:underline;text-underline-offset:3px;text-decoration-color:#555}
+article a:hover{text-decoration-color:#fff}
+article ul,article ol{margin:0 0 22px 22px}
+article li{margin:0 0 9px}
+article blockquote{border-left:2px solid #3a3a3a;padding:2px 0 2px 20px;margin:0 0 24px;color:#fff;font-size:19px;font-style:normal}
+article pre{background:#0c0c0c;border:1px solid #1c1c1c;border-radius:10px;padding:18px;overflow-x:auto;margin:0 0 24px}
+article pre code{font-family:'Geist Mono',monospace;font-size:13px;color:#cfcfcf;line-height:1.55;white-space:pre}
+.backbtn{display:inline-block;margin-top:60px;color:#8a8a8a;text-decoration:none;font-size:14px}
+.backbtn:hover{color:#fff}
+</style></head>
+<body>
+<div class="top"><a href="../index.html">← Prufold Labs</a></div>
+<div class="wrap">
+  <h1 class="title">ClawCheck: The Trust Layer OpenClaw Needs</h1>
+  <div class="byline">By Prufold Labs Team • February 10, 2026 • 7 min read</div>
+  <div class="rule"></div>
+  <article><p>OpenClaw agents are powerful and autonomous, but the security layer that makes them safe to run at scale is missing. ClawCheck provides architectural enforcement, not just monitoring.</p>
+<p>Over the past week, OpenClaw has been everywhere. Hacker News, Discord, X. Everywhere you look, people are spinning up autonomous agents and sharing what they're building. And watching this wave of adoption unfold, we had one of those clarifying moments where you suddenly see how fast things are moving.</p>
+<p>We've been building verifiable compute infrastructure for AI with hardware isolation, cryptographic proofs, and formal verification. But this OpenClaw moment made something obvious: the agent ecosystem is evolving waaay faster than the trust infrastructure underneath it. People are deploying powerful autonomous agents TODAY. The security layer that makes them safe to run at scale is still missing.</p>
+<p>So we accelerated. In the next few days we're launching <a href="https://app.prufoldlabs.ai">ClawCheck</a>, a trust layer for OpenClaw agents that's not what you'd expect from another AI security product.</p>
+<p>This isn't a monitoring system that watches your agents and flags suspicious behavior. It's not a firewall that tries to catch bad prompts. What we built is an architectural approach to constraining what AI agents can do in the first place, enforced by hardware and backed by mathematical proofs.</p>
+<h2>Why Firewalls Won't Cut It</h2>
+<p>OpenClaw represents something genuinely new in AI capabilities. These agents control browsers, execute system commands, extract structured data, and chain complex operations without human intervention. The power is real. So is the risk.</p>
+<p>Look at what people are already doing. Someone deploys an agent to manage crypto wallets and automate DeFi trading, using third-party skills from ClawHub written by developers they've never met. Another connects their agent to WhatsApp, Signal, Telegram, Slack, and Discord, giving it access to read every message, summarize conversations, and send replies autonomously. Developers are using agents to manage CI/CD pipelines with admin privileges. Others are handing over long-lived API keys so agents can work 24/7.</p>
+<p>These are real use cases happening right now and each one is a security nightmare waiting to happen.</p>
+<p>The fundamental problem is that you have no way to verify what actually happened. Can you prove the agent used the model you paid for, not a cheaper substitute? What stops a jailbroken LLM from exfiltrating your private keys? When third-party skills run with your credentials, what guarantees do you have? If the agent gets compromised, how do you limit the blast radius?</p>
+<p>And here's one most people haven't thought about: when your agent is connected to Slack, Signal, and Discord simultaneously, what prevents confidential enterprise data from your Slack workspace from leaking into a public Discord server? The agent has access to all of them. Current security gives you nothing here.</p>
+<p>Current AI security is fundamentally reactive. Firewalls watch for suspicious activity and try to block it. Monitoring systems flag anomalies and hope you catch them in time. But if the model gets tricked or compromised, reactive defenses are just speed bumps.</p>
+<h2>Enforcement, Not Detection</h2>
+<p>ClawCheck is different. Instead of trying to detect and block bad behavior after the fact, we make entire categories of bad actions impossible by construction.</p>
+<p>The distinction matters because it changes the threat model completely. When security is about detection, you're always playing catch-up. But when security is enforced by the architecture itself, backed by hardware and mathematical proofs, the game changes. Even if an LLM is jailbroken or manipulated, it still cannot exceed the capabilities the system grants it. Not because we're monitoring carefully but because those capabilities literally don't exist.</p>
+<p>We should be upfront about where we are. Our security architecture enforces these guarantees today through hardware isolation, capability confinement, and information flow control. Key invariants like diary integrity, capability chain bounds, and cross-channel flow policy are formally proven in Lean 4, machine-checked by the theorem prover. Other properties are formally specified with proof structures in progress. We're also integrating SP1 zero-knowledge proofs so that these guarantees become independently verifiable by anyone, without trusting us. The ZK layer is architecturally designed and in active development.</p>
+<p>We're shipping an enforceable architecture now, and continuously upgrading the assurance level with machine-checked proofs and cryptographic verification over time. We think this is how serious engineering teams should talk about security... by telling you what's enforced, what's proven, and what's in progress.</p>
+<p>Here's how the enforcement works:</p>
+<h3>Hardware isolation</h3>
+<p>The agent runtime operates inside Trusted Execution Environments (TEE) hardware-isolated compute where even we can't see what's happening inside. We ship with Intel SGX and TDX support, with AMD SEV also available. The model runs in a secure enclave, and the only way to interact with it is through cryptographically verified channels. Our architecture also supports GPU-accelerated inference within confidential computing environments, with NVIDIA H100 Confidential Computing support for workloads where you need hardware-attested GPU inference.</p>
+<h3>Policy-based access control</h3>
+<p>ClawCheck enforces policies through OpenClaw's hook system at every stage of the message pipeline. Before a tool call executes, the policy engine evaluates it against configured rules: tool allowlists, provider allowlists, channel allowlists, token budgets, and cross-channel data flow restrictions. An agent configured to only use web_search cannot call execute_shell no matter what the model tries to do. There's no ambient authority, no "just try to execute this command and see if it works." If a capability isn't explicitly allowed, it's blocked.</p>
+<h3>Privacy layer with per-channel isolation</h3>
+<p>ClawCheck includes comprehensive PII detection and redaction (6 categories: email, phone, credit card, SSN, IP address, date of birth), with four redaction modes. But the real innovation is per-channel encryption: each messaging channel gets a unique derived encryption key via HKDF-SHA256. Data encrypted for Slack cannot be decrypted with Discord's key, providing cryptographic isolation between channels. If you've worried about confidential data leaking across communication platforms, this solves it.</p>
+<h3>Information flow control</h3>
+<p>This is the guarantee most relevant to multi-channel agent deployments, and the one nobody else is offering. ClawCheck enforces a type-level information flow policy. Every piece of data carries a security label: confidentiality level, integrity level, owner, and authorized readers. The system enforces that data can only flow to destinations at an equal or higher security level.</p>
+<p>Concretely: data classified as Confidential in your Slack workspace cannot flow to your public Discord server. Data from Signal (TopSecret) can flow to Slack (Confidential) but not the reverse. This isn't a runtime filter that can be circumvented, it's enforced by the type system, proven correct in Lean 4.</p>
+<h3>Transparency and verifiable audit</h3>
+<p>The critical security properties are not just enforced. They are independently verifiable. Hardware attestation confirms that the model running inside the enclave matches the fingerprint you expect. Audit checkpoints are submitted to a transparency service implementing RFC 9162 Certificate Transparency, an append-only Merkle tree where anyone can verify inclusion and consistency proofs. We're integrating SP1 zero-knowledge proofs across all six guarantee categories so that anyone can verify these properties held for a given execution without accessing the private data itself.</p>
+<p>The result: you can reason about AI agent risk the same way you reason about IAM roles or database permissions. Infrastructure-level security, not prayer-driven development.</p>
+<h2>Six Security Guarantees</h2>
+<p>ClawCheck provides six core guarantees. Each is enforced architecturally today; formal proof coverage varies by property, and we're expanding it continuously.</p>
+<h3>1. Model identity verification</h3>
+<p>Cryptographic proof that a specific model ran, not a substituted alternative. The model code and weights are fingerprinted with SHA-256, and the TEE attestation confirms that fingerprint before execution.</p>
+<p>Status: enforced via TEE attestation; SP1 ZK proof in development</p>
+<h3>2. Input integrity</h3>
+<p>Inputs carry cryptographic signatures from authorized sources. Replay attacks are prevented via nonce tracking. Unsigned or tampered inputs are rejected before they reach the model.</p>
+<p>Status: enforced; InputIntegrity trait formally specified</p>
+<h3>3. Output authenticity</h3>
+<p>Outputs are signed by the hardware enclave, making forgery cryptographically detectable. You can verify that an output actually came from the attested model running in the secure environment.</p>
+<p>Status: enforced via TEE signing</p>
+<h3>4. Policy enforcement</h3>
+<p>Policy rules are evaluated inside the secure boundary and cannot be bypassed. Blocked commands stay blocked. Rate limits are enforced via monotonic counters. Access controls are architectural, not advisory.</p>
+<p>Status: enforced; SP1 ZK proof in development</p>
+<h3>5. Audit integrity</h3>
+<p>Every event is recorded in tamper-evident audit logs with hash chaining and Merkle checkpoints. Any modification to the log is cryptographically detectable.</p>
+<p>Status: enforced; diary integrity formally proven in Lean 4</p>
+<h3>6. Enclave tamper resistance</h3>
+<p>The secure enclave initializes with proper key material, enforces isolation boundaries, and performs secure shutdown with key zeroization. Tampering attempts are cryptographically detectable.</p>
+<p>Status: enforced; enclave lifecycle formally specified</p>
+<h2>Why Now</h2>
+<p>There's a pattern here worth understanding. Early cloud computing required customers to trust providers at face value. You moved workloads to AWS and basically had to believe they were doing what they said. Serious enterprise adoption at scale only happened after trust moved into infrastructure-level guarantees: hardware-backed isolation, auditable execution, and standardized interfaces. Trust became architectural rather than vendor-dependent.</p>
+<p>AI agents are in that same early phase right now. Execution is opaque. Trust is vendor-dependent. Guarantees are informal. The technology is powerful enough to be useful, but the trust infrastructure hasn't caught up yet.</p>
+<p>Prufold is building that infrastructure layer, and ClawCheck is the first application. It is a proof of concept, but also a production-ready solution that can be used today.</p>
+<p>The architecture prevents entire classes of attacks that monitoring systems can only detect after the fact:</p>
+<ul><li>An agent not authorized to exfiltrate data cannot do so even if the model is compromised, because the policy engine blocks it before execution</li><li>Confidential data from your enterprise Slack cannot leak to a public Discord channel, because each channel uses a cryptographically isolated encryption key. Data encrypted for one channel cannot be decrypted with another's key</li><li>Model substitution attacks become cryptographically detectable via TEE attestation and model fingerprinting, rather than something you trust didn't happen</li><li>PII is automatically detected and redacted before it enters audit logs or crosses channel boundaries. Six categories (email, phone, credit card, SSN, IP address, DOB) with four redaction modes</li><li>Audit log tampering is mathematically impossible because of hash chaining with Merkle checkpoints submitted to an append-only transparency log</li></ul>
+<p>This is the difference between detection and enforcement. Between monitoring and architecture. Between hoping your defenses hold and knowing mathematically that certain violations cannot occur.</p>
+<h2>What It Looks Like</h2>
+<p>ClawCheck integrates with OpenClaw as a plugin. Configuration example (~/.openclaw/openclaw.json):</p>
+<pre><code>{
+  &quot;plugins&quot;: {
+    &quot;clawcheck&quot;: {
+      &quot;enabled&quot;: true,
+      &quot;enclave&quot;: { &quot;type&quot;: &quot;sgx&quot; },
+      &quot;policy&quot;: {
+        &quot;toolAllowlist&quot;: [&quot;web_search&quot;, &quot;browser&quot;],
+        &quot;channelAllowlist&quot;: [&quot;slack&quot;, &quot;telegram&quot;],
+        &quot;blockCrossChannelData&quot;: true,
+        &quot;maxTokenBudget&quot;: 100000
+      },
+      &quot;privacy&quot;: {
+        &quot;piiDetection&quot;: true,
+        &quot;redactionMode&quot;: &quot;mask&quot;,
+        &quot;channelEncryption&quot;: true
+      },
+      &quot;vcts&quot;: {
+        &quot;enabled&quot;: true,
+        &quot;serverUrl&quot;: &quot;https://transparency.prufoldlabs.ai&quot;,
+        &quot;autoSubmitIntervalSecs&quot;: 300
+      }
+    }
+  }
+}</code></pre>
+<p>ClawCheck hooks into OpenClaw's message pipeline automatically. Every message, tool call, and agent interaction passes through the security layer before reaching its destination. The architecture enforces the policies. Hardware attestation proves it happened as specified.</p>
+<h2>What We're Launching</h2>
+<p>Starting later this week, we're opening up early access to ClawCheck at <a href="https://app.prufoldlabs.ai">app.prufoldlabs.ai</a>.</p>
+<p>What's shipping:</p>
+<ul><li>OpenClaw plugin with six security guarantees enforced via hooks</li><li>Hardware TEE support (simulated for development, Intel SGX and TDX for production)</li><li>Policy engine with tool/provider/channel allowlists and cross-channel data blocking</li><li>Privacy layer with PII detection, redaction, and per-channel encryption</li><li>Hash-chained audit logs with Merkle checkpoints</li><li>Transparency service (VCTS) for verifiable audit submission</li><li>25 formally proven theorems in Lean 4 with zero unproven assumptions</li></ul>
+<p>Pricing is pay-as-you-go with no subscriptions or commitments. You only pay for what you use. (We will give our first users some free credits to try it out.)</p>
+<p>On the roadmap: SP1 zero-knowledge proofs across all six guarantees (architecturally designed, in active development), AWS Nitro Enclave support, complete end-to-end formal verification composition, advanced policy DSL, multi-model support beyond our launch configuration, and enterprise SSO with team management.</p>
+<p>We wanted to get this into your hands now rather than wait for perfection.</p>
+<h2>Where This Goes</h2>
+<p>The vision is bigger than just securing one agent framework. We're building the foundation for safe deployment of autonomous AI in any domain where trust, privacy, and accountability aren't negotiable. Not because we trust the models to behave correctly, but because the architecture enforces what they can do and produces cryptographic proof that those constraints held.</p>
+<p>AI firewalls try to catch bad outputs after they happen. ClawCheck makes entire categories of bad actions impossible by construction.</p>
+<p>If you're running OpenClaw agents where trust, privacy, or auditability actually matter (crypto, healthcare, finance, legal, infrastructure management, or any other domain where you need to enforce what AI agents can do), this is for you. We're starting with early access and opening it up as we learn what use cases we haven't thought of yet and where the sharp edges are.</p>
+<p>For security engineers who want to go deeper: We'll be publishing our formal security framework alongside launch, including the Lean 4 proofs, the complete attacker model, and the threat analysis.</p>
+<p>First access starts later this week.</p>
+<p>Join the waitlist: <a href="https://app.prufoldlabs.ai">https://app.prufoldlabs.ai</a></p></article>
+  <a class="backbtn" href="index.html">← All posts</a>
+</div>
+</body></html>

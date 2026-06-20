@@ -1,0 +1,102 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Security Gaps in OpenClaw&#x27;s Skill Ecosystem and Why Cryptographic Proof Might Be the Fix — Prufold Labs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:#000;color:#ededed;font-family:'Geist',system-ui,sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased;letter-spacing:-.011em}
+.top{position:sticky;top:0;background:rgba(0,0,0,.7);backdrop-filter:blur(10px);border-bottom:1px solid #161616;padding:18px 28px;z-index:5}
+.top a{color:#bdbdbd;text-decoration:none;font-size:14px;font-weight:500;letter-spacing:.02em}
+.top a:hover{color:#fff}
+.wrap{max-width:720px;margin:0 auto;padding:70px 24px 120px}
+h1.title{font-size:clamp(30px,4.6vw,50px);font-weight:600;line-height:1.08;letter-spacing:-.03em;color:#fff;margin-bottom:18px}
+.byline{color:#7d7d7d;font-size:14px;margin-bottom:34px}
+.rule{height:1px;background:#1c1c1c;margin-bottom:40px}
+article{font-size:17px;color:#cfcfcf}
+article p{margin:0 0 22px}
+article h2{font-size:26px;font-weight:600;color:#fff;letter-spacing:-.02em;margin:46px 0 16px;line-height:1.2}
+article h3{font-size:20px;font-weight:600;color:#fff;letter-spacing:-.01em;margin:34px 0 12px}
+article strong{color:#fff;font-weight:600}
+article a{color:#fff;text-decoration:underline;text-underline-offset:3px;text-decoration-color:#555}
+article a:hover{text-decoration-color:#fff}
+article ul,article ol{margin:0 0 22px 22px}
+article li{margin:0 0 9px}
+article blockquote{border-left:2px solid #3a3a3a;padding:2px 0 2px 20px;margin:0 0 24px;color:#fff;font-size:19px;font-style:normal}
+article pre{background:#0c0c0c;border:1px solid #1c1c1c;border-radius:10px;padding:18px;overflow-x:auto;margin:0 0 24px}
+article pre code{font-family:'Geist Mono',monospace;font-size:13px;color:#cfcfcf;line-height:1.55;white-space:pre}
+.backbtn{display:inline-block;margin-top:60px;color:#8a8a8a;text-decoration:none;font-size:14px}
+.backbtn:hover{color:#fff}
+</style></head>
+<body>
+<div class="top"><a href="../index.html">← Prufold Labs</a></div>
+<div class="wrap">
+  <h1 class="title">The Security Gaps in OpenClaw&#x27;s Skill Ecosystem and Why Cryptographic Proof Might Be the Fix</h1>
+  <div class="byline">By Dr. Anish Mohammed, Founder &amp; CEO, Prufold Labs • February 19, 2026 • 8 min read</div>
+  <div class="rule"></div>
+  <article><p>OpenClaw is the fastest-growing open-source project in history. In under three months it exploded to 193K+ GitHub stars and 416K npm downloads per month, becoming the default open protocol for AI agents to interact across messaging channels. Creator Peter Steinberger joining OpenAI in February 2026, with the project moving to an open-source foundation, only accelerated adoption.</p>
+<p>But OpenClaw has a security problem. Not a theoretical one but a well-documented, actively exploited one. And the current approach to fixing it is fundamentally inadequate.</p>
+<p>This post explains the three categories of security vulnerabilities in OpenClaw's skill ecosystem, why existing mitigations (including the VirusTotal partnership) fall short, and how cryptographic verification, the approach we've built at Prufold Labs with ClawCheck, provides mathematical guarantees where probabilistic detection cannot.</p>
+<h2>The Three Vulnerability Classes</h2>
+<h3>1. Third-Party Skill Data Exfiltration</h3>
+<p>Cisco's AI security team discovered that "third-party OpenClaw skills can exfiltrate user data through seemingly benign API calls." Their Skill Scanner identified a malicious skill called "What Would Elon Do?" that ranked #1 in the skill repository while actively exfiltrating data via curl commands to external servers. A skill that claims to "summarize your emails" can silently forward conversation context, and this could include PII, credentials, and proprietary business data, to external endpoints.</p>
+<p>This is not an isolated incident. In the ClawHavoc supply-chain attack, threat actors compromised OpenClaw's ClawHub marketplace by mass-uploading 1,184 malicious skills that hid weaponized instructions in README files to trick users into executing malware, reverse shells, and data exfiltration (including AMOS macOS Stealer). The attack surface is enormous: OpenClaw supports 13+ messaging channels (WhatsApp, Telegram, Slack, Discord, Signal, and more), meaning a single malicious skill can harvest data from every channel simultaneously.</p>
+<p>The core issue: "OpenClaw's skill execution model trusts skills by default. There is no mechanism to verify what a skill actually does at runtime versus what it claims to do."</p>
+<h3>2. Authentication Bypass (CVE-2026-25253)</h3>
+<p>CVE-2026-25253 exposed a WebSocket authentication bypass in OpenClaw's transport layer. An attacker could connect to an OpenClaw server without valid credentials, enabling unauthorized access to any connected AI agent and its conversation history.</p>
+<p>WebSocket authentication is a known hard problem, but in the context of AI agents handling sensitive data (financial transactions, legal consultations, medical information) an auth bypass is not just a security bug. It's a compliance catastrophe.</p>
+<p>The patch addressed the immediate vulnerability, but the deeper architectural issue remains: there is no cryptographic attestation of connection authenticity. A patched server looks identical to a compromised one from the client's perspective.</p>
+<h3>3. Crypto Scam Social Engineering</h3>
+<p>During OpenClaw's rapid growth and rebranding phases, crypto scammers targeted users with fake skills and phishing campaigns. This is the inevitable consequence of explosive open-source adoption without a cryptographic trust chain: when anyone can publish a skill, users have no way to verify provenance.</p>
+<p>The VirusTotal partnership for skill scanning was a step in the right direction, but it addresses symptoms, not the root cause. VirusTotal scans for known malware signatures, a probabilistic, pattern-matching approach that misses novel attacks and provides no guarantee about what a skill will do in production.</p>
+<h2>Why Probabilistic Detection Isn't Enough</h2>
+<p>Every AI security tool on the market today, including the ones recently acquired for hundreds of millions (Protect AI for $700M, Robust Intelligence for $400M, Lakera for $300M, Prompt Security for $250M), uses the same fundamental approach: ML-based classifiers that detect suspicious patterns.</p>
+<p>This approach has three irreducible limitations:</p>
+<p><strong>False negatives are guaranteed.</strong> ML classifiers learn from training data. A novel exfiltration technique that doesn't match known patterns will pass undetected. In security, one false negative can be catastrophic.</p>
+<p><strong>No proof of correctness.</strong> A probabilistic scanner can say "we didn't find anything suspicious" but cannot say "we guarantee this skill does exactly what it claims and nothing else." The difference matters enormously when regulators start demanding provable compliance, which they will, starting August 2, 2026, when EU AI Act high-risk system requirements take effect.</p>
+<p><strong>Runtime behavior diverges from static analysis.</strong> A skill can pass every static scan and still behave maliciously at runtime. Context-dependent attacks, time-delayed exfiltration, and polymorphic code all defeat scan-time detection.</p>
+<h2>The Cryptographic Alternative: What ClawCheck Does Differently</h2>
+<p>ClawCheck takes a fundamentally different approach. Instead of trying to detect bad behavior (probabilistic), it proves good behavior (deterministic). The system provides six cryptographic guarantees for AI gateway security:</p>
+<h3>Model Identity Verification</h3>
+<p>Every AI model invocation is cryptographically attested. When an OpenClaw skill calls GPT-4, Claude, or any other model, ClawCheck generates a proof that the specific model version was actually used—not a cheaper substitute, not a fine-tuned variant, not a malicious wrapper. This uses TEE (Trusted Execution Environment) attestation: the hardware itself certifies what code ran.</p>
+<h3>Audit Integrity</h3>
+<p>Every interaction—every message, every skill invocation, every API call—is recorded in a SCITT-aligned (Supply Chain Integrity, Transparency, and Trust) transparency log. These logs are append-only and tamper-evident: any modification is cryptographically detectable. This isn't "logging" in the traditional sense. It's a mathematical guarantee that the audit trail is complete and unaltered.</p>
+<h3>Tamper Resistance</h3>
+<p>ZK (zero-knowledge) proofs verify that inputs, outputs, and intermediate computations have not been modified. If a skill claims to have processed your data in a specific way, ClawCheck can prove it, without revealing the data itself. We use SP1 as our ZK prover, which provides fast proof generation suitable for real-time AI gateway traffic.</p>
+<h3>Policy Enforcement</h3>
+<p>Security policies (data handling rules, access controls, retention limits) are enforced cryptographically, not just checked procedurally. A policy violation is not just flagged. It is made mathematically impossible.</p>
+<h3>Non-Repudiation</h3>
+<p>No party (not the user, not the skill developer, not the platform operator) can deny their actions. Every action is cryptographically signed and attributable.</p>
+<h3>Transparency</h3>
+<p>All verification proofs are publicly auditable via the transparency log. Trust doesn't require trusting any single party; it only requires trusting the mathematics.</p>
+<h2>How It Works with OpenClaw</h2>
+<p>ClawCheck integrates as an OpenClaw security skill. It runs alongside your other skills and wraps the entire interaction pipeline with cryptographic guarantees. Here's what happens when a user sends a message:</p>
+<pre><code>User Message -&gt; OpenClaw Router
+    |
+ClawCheck Intercept (Node.js -&gt; NAPI bridge -&gt; Rust core)
+    |-- Verify channel authentication (JWT + gateway token)
+    |-- Check skill provenance (cryptographic signature verification)
+    |-- PII detection + AES-256-GCM per-channel encryption
+    |-- Generate transparency log entry (-&gt; VCTS on :8080)
+    |
+Skill Execution (isolated container, non-root, capabilities dropped)
+    |
+ClawCheck Output Verification (Rust core -&gt; SP1 prover)
+    |-- ZK proof of computation integrity
+    |-- Output policy compliance check (Lean-verified properties)
+    |-- Append to SCITT transparency log (VCTS)
+    |
+User Response (with verifiable proof chain)</code></pre>
+<h2>What This Means for Compliance</h2>
+<p>The regulatory landscape is moving from "detect problems" to "prove compliance." EU AI Act Article 12 requires automatic logging of AI system operations. Article 15 requires accuracy, robustness, and cybersecurity with technical measures. Article 19 requires automatically generated logs for high-risk systems. California SB 53, already in effect since January 1, 2026, requires frontier AI developers to publish safety frameworks with $1M fines per violation. A 42-state AG coalition is coordinating AI enforcement.</p>
+<p>ClawCheck's six guarantees map directly to these requirements. Model identity verification addresses Article 11 (Technical Documentation). Audit integrity maps to Articles 12 and 19 (Record-Keeping). Tamper resistance fulfills Article 15. Policy enforcement satisfies Article 9 (Risk Management). No probabilistic scanner can provide this mapping. You cannot prove compliance with a "we didn't find anything suspicious" report. You need mathematical proof.</p>
+<h2>Try It</h2>
+<p>If you're running OpenClaw in production, or planning to, you probably have a security checklist that's growing faster than your team can address it. We built ClawCheck because we kept seeing the same pattern: organizations adopting AI agents at speed, then scrambling to retrofit security afterward.</p>
+<p>Getting started takes less than a minute. Sign in at <a href="https://app.prufoldlabs.ai">app.prufoldlabs.ai</a> and you'll have a fully isolated, cryptographically verified OpenClaw gateway running immediately.</p>
+<p>We're offering early access to teams dealing with regulated data, multi-channel deployments, or compliance requirements that probabilistic scanning can't satisfy. If you're facing an August 2nd EU AI Act deadline or need to demonstrate provable security properties to your CISO, sign up for early access.</p>
+<p>Reach out at <a href="mailto:hello@prufold.ai">hello@prufold.ai</a>. We can show you the transparency logs, walk through the attestation chain, and explain exactly how the ZK proofs work without the hand-waving.</p>
+<p>This isn't about selling you on cryptography. It's about showing you a different way to think about AI security, where you don't have to trust our claims because the math speaks for itself.</p></article>
+  <a class="backbtn" href="index.html">← All posts</a>
+</div>
+</body></html>
