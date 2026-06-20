@@ -72,6 +72,8 @@
 
   .statement{text-align:center}
   .statement p{font-size:clamp(18px,2.3vw,29px);font-weight:600;max-width:34ch;margin:0 auto;line-height:1.25;letter-spacing:-.02em}
+  .statement .kw{transition:color .5s ease,-webkit-text-fill-color .5s ease}
+  .statement .kw.on{color:#9bd45f;-webkit-text-fill-color:#9bd45f}
 
   .partners{text-align:center}
   .partners p.lead{color:var(--muted);font-weight:500}
@@ -158,7 +160,7 @@
 <!-- STATEMENT (after video, above pillars) -->
 <div class="fxsec"><canvas class="secbg" data-fx="nodes"></canvas>
 <section id="about" class="statement reveal">
-  <p style="color:#fff;-webkit-text-fill-color:#fff">“We make it possible to build agentic apps, LLM pipelines, and robotics workflows with verifiable trust without requiring deep cryptography expertise.”</p>
+  <p style="color:#fff;-webkit-text-fill-color:#fff">“We make it possible to build <span class="kw">agentic apps</span>, <span class="kw">LLM pipelines</span>, and <span class="kw">robotics workflows</span> with <span class="kw">verifiable trust</span> without requiring deep cryptography expertise.”</p>
 </section></div>
 
 <!-- PILLARS (moved above blogs) -->
@@ -327,6 +329,9 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
     render('');setTimeout(step,300+Math.random()*700);
   });
 })();
+/* statement: cycle a green highlight through the key phrases */
+(function(){var ks=document.querySelectorAll('.statement .kw');if(!ks.length)return;var i=0;
+  setInterval(function(){ks.forEach(function(k){k.classList.remove('on');});ks[i%ks.length].classList.add('on');i++;},1100);})();
 /* animated force icons */
 (function(){
   var cs=[].slice.call(document.querySelectorAll('canvas.forcefx'));if(!cs.length)return;
